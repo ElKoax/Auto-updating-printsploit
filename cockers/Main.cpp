@@ -18,11 +18,12 @@ void DebugConsole()
 	*(BYTE*)& FreeConsole = 0xC3;
 	VirtualProtect(&FreeConsole, 1, OldPerm, NULL);
 	AllocConsole();
-	std::string title = "a";
-	SetConsoleTitleA("a");
+	SetConsoleTitleA("Print-Sploit -- Auto Updating Edition");
 	freopen("CONOUT$", "w", stdout);
 	freopen("CONIN$", "r", stdin);
 }
+
+
 
 
 void runPrint(std::string str)
@@ -32,21 +33,13 @@ void runPrint(std::string str)
 	r_lua_pcall(rL, 1, 0, 0);
 }
 
-
-
 void main()
 {
 	/* Init */
 	DebugConsole();
-	printf("Please Wait a moment, while we initilise EyeStep");
+	// Epic code (dont skid too hard ryle)
 	EyeStep::open(GetCurrentProcess());
-	Sleep(1000);
-	printf(".");
-	Sleep(500);
-	printf(".");
-	Sleep(500);
-	printf(".");
-	printf("Initilized!");
+	printf("EyeStep Loaded. \n");
 	auto func = getPrologue(EyeStep::scanner::scan_xrefs("The meta", 1)[1]);
 	auto calls = getCalls(nextCall(func));
 	auto index2adr = nextCall(calls[0]);
@@ -58,11 +51,6 @@ void main()
 	uint32_t a_touserdata = calls[1];
 	uint32_t a_settop = calls[2];
 	uint32_t a_setfield = calls[5];
-	printf("lua_getfield      %08X  %s\n", raslr(calls[0]), getAnalysis(calls[0]).c_str());
-	printf("lua_setfield      %08X  %s\n", raslr(a_setfield), getAnalysis(a_setfield).c_str());
-	printf("lua_touserdata    %08X  %s\n", raslr(calls[1]), getAnalysis(calls[1]).c_str());
-	printf("lua_pcall  %08X  %s\n", raslr(getPrologue(index2adr_xref[15])), getAnalysis(getPrologue(index2adr_xref[15])).c_str());
-
 	uint32_t a_pcall = getPrologue(index2adr_xref[15]);
 	/* Init the Actual Auto updating offsets! */
 	calls = getCalls(calls[0]);
