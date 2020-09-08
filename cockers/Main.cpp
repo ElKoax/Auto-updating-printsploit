@@ -78,8 +78,6 @@ void main()
 		std::getline(std::cin, str);
 		runPrint(str);
 	}
-
-
 }
 
 
